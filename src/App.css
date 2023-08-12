@@ -1,14 +1,96 @@
 .App {
   text-align: center;
+  height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+.main-flex-container {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  background-color: #696969;
+  height: 100%;
+}
+
+.week-flex-container {
+  flex-grow: 4;
+  flex-basis: auto;
+  display: flex;
+  flex-direction: row;
+  background-color: red;
+}
+
+.day-flex-container {
+  flex-basis: auto;
+  flex-grow: 1;
+  background-color: pink;
+  border: 2px solid black;
+  border-radius: 8px;
+  margin: 3px;
+}
+
+.sidebar-flex-container {
+  flex-grow: 1;
+  flex-basis: 8%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: blue;
+}
+
+.menu-flex-container {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 100px;
+  background-color: green;
+  border-radius: 8px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.menu-flex-item {
+  flex-grow: 1;
+  flex-basis: 100%;
+  margin: 5px;
+}
+
+.menu-select-item {
+  min-width: 100%;
+}
+
+.course-list-flex-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  text-align: left;
+}
+
+.course-list-flex-item {
+  flex-grow: 0;
+  margin: 5px;
+  padding: 8px;
+  border-radius: 8px;
+  min-height: 110px;
+  background-color: yellow;
+  overflow: hidden;
+}
+
+.course-details {
+  margin: 0;
+  font-size: 0.8em;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
