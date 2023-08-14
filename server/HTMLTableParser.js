@@ -40,7 +40,7 @@ class HTMLTableParser {
     }
 
     static getCourseMainInfo(rowElement) {
-        let tokens = rowElement.children["1"].children["0"].children["0"].data.split("-").map(token => token.trim());
+        let tokens = rowElement.children["1"].children["0"].children["0"].data.split(" - ").map(token => token.trim());
 
         return {
             courseName: tokens[0],
