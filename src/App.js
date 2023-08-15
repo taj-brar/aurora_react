@@ -1,8 +1,11 @@
-import React from "react";
-import {getCourses} from "./Utility";
+import React from 'react';
+import {getCourses} from './Utility';
 import './App.css';
 import Course from './Course.js';
-import RepeatedSession from "./RepeatedSession";
+import RepeatedSession from './RepeatedSession.js';
+import YearSelector from './YearSelector.js';
+import TermSelector from "./TermSelector";
+import SubjectSelector from "./SubjectSelector";
 
 function App() {
     const [year, setYear] = React.useState(2022);
@@ -16,23 +19,10 @@ function App() {
             .then(data => RepeatedSession.CreateFromParsedDataSet(data))
             .then(courseList => {
                 setCourses(courseList);
-                setYear(2024);
             })
     }
 
-    const updateYear = (e) => {
-        setYear(e.target.value);
-    }
-
-    const updateTerm = (e) => {
-        setTerm(e.target.value);
-    }
-
-    const updateSubject = (e) => {
-        setSubject(e.target.value);
-    }
-
-    const coursesList = courses.map((course) => <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course} onclick={updateCourseList}/>);
+    const coursesList = courses.map((course) => <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course}/>);
 
     return (
         <div className="App main-flex-container">
@@ -52,31 +42,19 @@ function App() {
                     <div className="menu-flex-item">
                         <label htmlFor="year" style={{textAlign: "center"}}>Year</label>
                         <br/>
-                        <select id="year" className="menu-select-item" onChange={updateYear}>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                        </select>
+                        <YearSelector setYear={setYear}/>
                     </div>
 
                     <div className="menu-flex-item">
                         <label htmlFor="term">Term</label>
                         <br/>
-                        <select id="term" className="menu-select-item" onChange={updateTerm}>
-                            <option value="Winter">Winter</option>
-                            <option value="Fall">Fall</option>
-                            <option value="Summer">Summer</option>
-                        </select>
+                        <TermSelector setTerm={setTerm}/>
                     </div>
 
                     <div className="menu-flex-item">
                         <label htmlFor="subject">Subject</label>
                         <br/>
-                        <select id="subject" className="menu-select-item" onChange={updateSubject}>
-                            <option value="Computer Science">Computer Science</option>
-                        </select>
+                        <SubjectSelector setSubject={setSubject}/>
                     </div>
 
                     <button className="menu-flex-item" onClick={updateCourseList}>Get courses</button>
