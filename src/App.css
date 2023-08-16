@@ -84,9 +84,21 @@ body {
   min-height: 110px;
   background-color: yellow;
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
 }
 
-.course-details {
+.extra-course-info {
+  width: 10%;
+  flex-grow: 0;
+}
+
+button.course-details {
+  width: 90%;
+  flex-grow: 1;
+}
+
+p.course-details {
   margin: 0;
   font-size: 0.8em;
   text-align: left;
