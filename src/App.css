@@ -91,11 +91,13 @@ body {
 .extra-course-info {
   width: 10%;
   flex-grow: 0;
+  float: left;
 }
 
 button.course-details {
   width: 90%;
   flex-grow: 1;
+  float: right;
 }
 
 p.course-details {

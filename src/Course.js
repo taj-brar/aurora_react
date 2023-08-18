@@ -8,21 +8,37 @@ class Course extends React.Component {
 
         this.state = {
             course: props.course,
-            updateYear: props.onclick
+            chosen: false,
+            chooseCourse: props.chooseCourse,
+            unChooseCourse: props.unChooseCourse
         }
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.setState((oldState) => ({
+            chosen: !oldState.chosen
+        }), () => {
+            if (this.state.chosen)
+                this.state.chooseCourse(this.state.course.getCRN());
+            else
+                this.state.unChooseCourse(this.state.course.getCRN());
+        });
     }
 
     render() {
-        console.log("Passed course")
-        console.log(this.state.course);
         const course = this.state.course;
+        const courseButtonStyle = {
+            backgroundColor: this.state.chosen ? "#9e9ea3" : "#d0d0d7"
+        }
 
         return (
             <div className="course-list-flex-item">
-                <Popup className="extra-course-info" trigger={<button style={{float: "left"}}>&lt;</button>}>
+                <Popup className="extra-course-info" trigger={<button>&lt;</button>}>
                     <div></div>
                 </Popup>
-                <button className="course-details" onClick={this.state.updateYear} style={{float: "right"}}>
+                <button className="course-details" style={courseButtonStyle} onClick={this.handleClick}>
                     <p className="course-details"
                        style={{fontSize: "1.1em"}}>{course.getCourseNumber()} {course.getSection()} - {course.getCourseName()}</p>
                     <p className="course-details"></p>

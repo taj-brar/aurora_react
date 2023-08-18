@@ -7,66 +7,128 @@ import YearSelector from './YearSelector.js';
 import TermSelector from "./TermSelector";
 import SubjectSelector from "./SubjectSelector";
 
-function App() {
-    const [year, setYear] = React.useState(2022);
-    const [term, setTerm] = React.useState("Winter");
-    const [subject, setSubject] = React.useState("Computer Science");
-    const [courses, setCourses] = React.useState([]);
+class App extends React.Component {
+    constructor(props) {
+        super(props);
 
-    const updateCourseList = async () => {
+        this.state = {
+            year: 2024,
+            term: 'Winter',
+            subject: 'Computer Science',
+            courses: [],
+            chosenCourses: []
+        }
+
+        this.updateCourseList = this.updateCourseList.bind(this);
+        this.unChooseCourse = this.unChooseCourse.bind(this);
+        this.chooseCourse = this.chooseCourse.bind(this);
+        this.setYear = this.setYear.bind(this);
+        this.setTerm = this.setTerm.bind(this);
+        this.setSubject = this.setSubject.bind(this);
+    }
+
+    async updateCourseList() {
         console.log("Update course list");
-        await getCourses(year, term, subject)
+        await getCourses(this.state.year, this.state.term, this.state.subject)
             .then(data => RepeatedSession.CreateFromParsedDataSet(data))
             .then(courseList => {
-                setCourses(courseList);
+                this.setState({courses: courseList});
             })
     }
 
-    const coursesList = courses.map((course) => <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course}/>);
+    unChooseCourse(crn) {
+        console.log("\nunChose: " + crn);
+        this.setState((oldState) => ({
+            chosenCourses: oldState.chosenCourses.filter((c) => c.getCRN() !== crn)
+        }), () => {
+            console.log(this.state.chosenCourses);
+            console.log("DONE --- unChose: " + crn);
+        })
+    }
 
-    return (
-        <div className="App main-flex-container">
+    chooseCourse(crn) {
+        console.log("\nchose: " + crn);
+        this.setState((oldState) => ({
+            chosenCourses: oldState.chosenCourses.concat(oldState.courses.filter((c) => c.getCRN() === crn))
+        }), () => {
+            console.log(this.state.chosenCourses);
+            console.log("DONE --- chose: " + crn);
+        });
 
-            <div className="week-flex-container">
-                <div className="day-flex-container"></div>
-                <div className="day-flex-container"></div>
-                <div className="day-flex-container"></div>
-                <div className="day-flex-container"></div>
-                <div className="day-flex-container"></div>
-            </div>
+    }
 
-            <div className="sidebar-flex-container">
+    setYear(newYear) {
+        this.setState({
+            year: newYear
+        })
+    }
 
-                <div className="menu-flex-container">
+    setTerm(newTerm) {
+        this.setState({
+            term: newTerm
+        })
+    }
 
-                    <div className="menu-flex-item">
-                        <label htmlFor="year" style={{textAlign: "center"}}>Year</label>
-                        <br/>
-                        <YearSelector setYear={setYear}/>
-                    </div>
+    setSubject(newSubject) {
+        this.setState({
+            subject: newSubject
+        })
+    }
 
-                    <div className="menu-flex-item">
-                        <label htmlFor="term">Term</label>
-                        <br/>
-                        <TermSelector setTerm={setTerm}/>
-                    </div>
+    render() {
+        const coursesList = this.state.courses.map((course) =>
+                <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course} unChooseCourse={this.unChooseCourse} chooseCourse={this.chooseCourse}/>);
 
-                    <div className="menu-flex-item">
-                        <label htmlFor="subject">Subject</label>
-                        <br/>
-                        <SubjectSelector setSubject={setSubject}/>
-                    </div>
+        return (
 
-                    <button className="menu-flex-item" onClick={updateCourseList}>Get courses</button>
+            <div className="App main-flex-container">
+
+                <div className="week-flex-container">
+                    <div className="day-flex-container"></div>
+                    <div className="day-flex-container"></div>
+                    <div className="day-flex-container"></div>
+                    <div className="day-flex-container"></div>
+                    <div className="day-flex-container"></div>
                 </div>
 
-                <div className="course-list-flex-container">
-                    { coursesList }
-                </div>
+                <div className="sidebar-flex-container">
 
+                    <div className="menu-flex-container">
+
+                        <div className="menu-flex-item">
+                            <label htmlFor="year" style={{
+                                textAlign: "center"
+                            }
+
+                            }>Year</label>
+                            <br/>
+                            <YearSelector setYear={this.setYear}/>
+                        </div>
+
+                        <div className="menu-flex-item">
+                            <label htmlFor="term">Term</label>
+                            <br/>
+                            <TermSelector setTerm={this.setTerm}/>
+                        </div>
+
+                        <div className="menu-flex-item">
+                            <label htmlFor="subject">Subject</label>
+                            <br/>
+                            <SubjectSelector setSubject={this.setSubject}/>
+                        </div>
+
+                        <button className="menu-flex-item" onClick={this.updateCourseList}>Get courses</button>
+                    </div>
+
+                    <div className="course-list-flex-container">
+                        {coursesList}
+                    </div>
+
+                </div>
             </div>
-        </div>
-    );
+        )
+            ;
+    }
 }
 
 export default App;
