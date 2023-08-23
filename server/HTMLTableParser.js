@@ -1,5 +1,5 @@
 "use strict";
-const cheerio = require('cheerio');
+import cheerio from 'cheerio';
 
 class HTMLTableParser {
     // CLASS METHODS
@@ -88,8 +88,9 @@ class HTMLTableParser {
 
     static getCourseSchedule(tableElement) {
         const rowElements = tableElement.children["2"].children.filter(element => element.name === "tr");
-        const scheduledDates = new Array(rowElements.length - 1); // parse all row elements except the first since it contains column names
+        const scheduledDates = [];
 
+        // parse all row elements except the first since it contains column names
         for (let i = 1; i < rowElements.length; i++)
             scheduledDates.push(this.getParsedScheduledDate(rowElements[i]));
 
@@ -106,7 +107,7 @@ class HTMLTableParser {
             location: this.getFirstChildData(dataElements[3]),
             dateRange: this.getFirstChildData(dataElements[4]),
             scheduleType: this.getFirstChildData(dataElements[5]),
-            instructors: this.getFirstChildData(dataElements[6])
+            instructors: this.getFirstChildData(dataElements[6])?.substring(0, this.getFirstChildData(dataElements[6]).lastIndexOf(' '))
         }
     }
 
@@ -116,4 +117,4 @@ class HTMLTableParser {
 
 }// end class HTMLTableParser
 
-module.exports = HTMLTableParser;
+export default HTMLTableParser;

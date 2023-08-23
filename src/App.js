@@ -1,11 +1,11 @@
 import React from 'react';
-import {getCourses} from './Utility';
+import Utility from './Utility.js';
 import './App.css';
 import Course from './Course.js';
 import RepeatedSession from './RepeatedSession.js';
 import YearSelector from './YearSelector.js';
-import TermSelector from "./TermSelector";
-import SubjectSelector from "./SubjectSelector";
+import TermSelector from "./TermSelector.js";
+import SubjectSelector from "./SubjectSelector.js";
 
 class App extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class App extends React.Component {
 
     async updateCourseList() {
         console.log("Update course list");
-        await getCourses(this.state.year, this.state.term, this.state.subject)
+        await Utility.getCourses(this.state.year, this.state.term, this.state.subject)
             .then(data => RepeatedSession.CreateFromParsedDataSet(data))
             .then(courseList => {
                 this.setState({courses: courseList});
@@ -126,8 +126,7 @@ class App extends React.Component {
 
                 </div>
             </div>
-        )
-            ;
+        );
     }
 }
 

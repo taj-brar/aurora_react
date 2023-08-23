@@ -29,6 +29,7 @@ class Course extends React.Component {
 
     render() {
         const course = this.state.course;
+        const schedule = course.getSchedule() ? course.getSchedule()["0"] : null;
         const courseButtonStyle = {
             backgroundColor: this.state.chosen ? "#9e9ea3" : "#d0d0d7"
         }
@@ -47,10 +48,10 @@ class Course extends React.Component {
                     <p className="course-details"
                        style={{float: "right"}}>{course.getTerm()} | {course.getCredits()} credits</p>
                     <br/>
-                    <p className="course-details">{course.getCampus()} | WALLACE 223</p>
-                    <p className="course-details">09:30 am - 10:20 am | MWF | Sep 07, 2022 - Dec 12, 2022</p>
-                    <p className="course-details">Heather Matheson</p>
-                    <p className="course-details" style={{float: "left"}}>Undergraduate Lecture | Lab required</p>
+                    <p className="course-details">{course.getCampus()}</p>
+                    <p className="course-details">{schedule !== null && schedule.hasTimeInfo()  ? schedule.getStartTime() + ' - ' +  schedule.getEndTime() + ' | ' +  schedule.getDays() + ' | ' + schedule.getLocation(): 'Schedule unavailable'}</p>
+                    <p className="course-details" style={{float: "left"}}>{schedule !== null ? schedule.getInstructors() : null}</p>
+                    <p className="course-details" style={{float: "right"}}>{schedule !== null ? schedule.getDateRange() : null}{course.isLabRequired() ? ' | Lab required' : null}</p>
                 </button>
             </div>
         );

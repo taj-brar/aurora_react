@@ -1,4 +1,5 @@
-const Utility = require('./Utility.js');
+import Utility from './Utility.js';
+import MeetingTimes from './MeetingTimes.js';
 
 /**
  * This class represents repeated, regular, sessions, such as lectures or labs.
@@ -23,7 +24,7 @@ class RepeatedSession {
     constructor(parsedData) {
         // Instantiate
         this.#courseName = parsedData.courseName;
-        this.#crn = Utility.parseIntSafe(parsedData.crn);
+        this.#crn = Utility.parseFloatSafe(parsedData.crn);
         this.#courseNumber = parsedData.courseNumber;
         this.#section = parsedData.courseSection;
         this.#requiresLab = parsedData.requiresLab;
@@ -31,10 +32,12 @@ class RepeatedSession {
         this.#registrationDates = parsedData.registrationDates;
         this.#levels = parsedData.levels;
         this.#attributes = parsedData.attributes;
-        this.#credits = Utility.parseIntSafe(parsedData.credits);
+        this.#credits = Utility.parseFloatSafe(parsedData.credits);
         this.#scheduleType = parsedData.scheduleType;
         this.#campus = parsedData.campus;
-        this.#schedule = parsedData.schedule;
+        this.#schedule = parsedData.schedule !== null
+            ? parsedData.schedule.map(schedule => new MeetingTimes(schedule))
+            : null;
     }
 
     getCourseName() {
@@ -53,7 +56,7 @@ class RepeatedSession {
         return this.#section;
     }
 
-    getLabRequirement() {
+    isLabRequired() {
         return this.#requiresLab;
     }
 

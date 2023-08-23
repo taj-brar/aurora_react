@@ -1,6 +1,6 @@
 class Utility {
-    static parseIntSafe(value) {
-        const token = parseInt(value.split(" "));
+    static parseFloatSafe(value) {
+        const token = parseFloat(value.split(" "));
         return isNaN(token) ? -1 : token;
     }
 
@@ -24,4 +24,4 @@ class Utility {
     }
 }// end class Utility
 
-module.exports = Utility;
+export default Utility;

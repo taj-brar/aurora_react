@@ -1,5 +1,5 @@
-const express = require("express");
-const HTMLTableParser = require("./HTMLTableParser.js");
+import express from 'express';
+import HTMLTableParser from './HTMLTableParser.js';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
