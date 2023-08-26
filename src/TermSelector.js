@@ -6,7 +6,7 @@ class TermSelector extends React.Component {
         super(props);
 
         this.state = {
-            selectedTerm: 'Winter',
+            selectedTerm: 'None',
             setTerm: props.setTerm,
             disabledTerms: props.disabledTerms
         }
@@ -25,6 +25,7 @@ class TermSelector extends React.Component {
     render() {
         return (
             <select id="term" className="menu-select-item" value={this.state.selectedTerm} onChange={this.handleChange}>
+                <option value="None">Select a term</option>
                 <option value="Fall" disabled={this.state.disabledTerms.includes('Fall')}>Fall</option>
                 <option value="Winter" disabled={this.state.disabledTerms.includes('Winter')}>Winter</option>
                 <option value="Summer" disabled={this.state.disabledTerms.includes('Summer')}>Summer</option>

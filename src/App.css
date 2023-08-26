@@ -64,6 +64,10 @@ body {
   margin: 5px;
 }
 
+div.menu-flex-item {
+  text-align: left;
+}
+
 .menu-select-item {
   min-width: 100%;
 }

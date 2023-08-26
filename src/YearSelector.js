@@ -6,7 +6,7 @@ class YearSelector extends React.Component {
         super(props);
 
         this.state = {
-            selectedYear: 2024,
+            selectedYear: 'None',
             setYear: props.setYear
         }
 
@@ -24,6 +24,7 @@ class YearSelector extends React.Component {
     render() {
         return (
             <select id="year" className="menu-select-item" value={this.state.selectedYear} onChange={this.handleChange}>
+                <option value="None">Select a year</option>
                 <option value="2024">2024</option>
                 <option value="2023">2023</option>
                 <option value="2022">2022</option>

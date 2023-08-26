@@ -17,8 +17,8 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            year: 2024,
-            term: 'Winter',
+            year: 'None',
+            term: 'None',
             subject: 'Computer Science',
             courses: [],
             chosenCourses: []
@@ -35,14 +35,16 @@ class App extends React.Component {
     }
 
     async updateCourseList() {
-        await Utility.getCourses(this.state.year, this.state.term, this.state.subject)
-            .then(data => RepeatedSession.CreateFromParsedDataSet(data))
-            .then(courseList => {
-                this.setState({
-                    courses: courseList,
-                    chosenCourses: []
-                });
-            })
+        if (this.state.year !== 'None' && this.state.term !== 'None' && this.state.subject !== 'None') {
+            await Utility.getCourses(this.state.year, this.state.term, this.state.subject)
+                .then(data => RepeatedSession.CreateFromParsedDataSet(data))
+                .then(courseList => {
+                    this.setState({
+                        courses: courseList,
+                        chosenCourses: []
+                    });
+                })
+        }
     }
 
     unChooseCourse(crn) {
@@ -55,8 +57,8 @@ class App extends React.Component {
     chooseCourse(crn) {
         this.setState((oldState) => ({
             chosenCourses: oldState.chosenCourses.concat(oldState.courses.filter((c) => c.getCRN() === crn))
-        }), () => {});
-
+        }), () => {
+        });
     }
 
     updateDisabledTerms(year) {
@@ -73,7 +75,8 @@ class App extends React.Component {
 
     setYear(newYear) {
         this.setState({
-            year: newYear
+            year: newYear,
+            term: 'None'
         })
         this.updateDisabledTerms(newYear)
     }
@@ -92,7 +95,8 @@ class App extends React.Component {
 
     render() {
         const coursesList = this.state.courses.map((course) =>
-                <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course} unChooseCourse={this.unChooseCourse} chooseCourse={this.chooseCourse}/>);
+            <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course} unChooseCourse={this.unChooseCourse}
+                    chooseCourse={this.chooseCourse}/>);
         const mondayCourses = this.state.chosenCourses.filter(course => course.isOnMonday());
         const tuesdayCourses = this.state.chosenCourses.filter(course => course.isOnTuesday());
         const wednesdayCourses = this.state.chosenCourses.filter(course => course.isOnWednesday())
@@ -115,11 +119,7 @@ class App extends React.Component {
                     <div className="menu-flex-container">
 
                         <div className="menu-flex-item">
-                            <label htmlFor="year" style={{
-                                textAlign: "center"
-                            }
-
-                            }>Year</label>
+                            <label htmlFor="year">Year</label>
                             <br/>
                             <YearSelector setYear={this.setYear}/>
                         </div>
@@ -127,7 +127,8 @@ class App extends React.Component {
                         <div className="menu-flex-item">
                             <label htmlFor="term">Term</label>
                             <br/>
-                            <TermSelector key={this.disabledTerms.toString()} setTerm={this.setTerm} disabledTerms={this.disabledTerms}/>
+                            <TermSelector key={this.disabledTerms.toString()} setTerm={this.setTerm}
+                                          disabledTerms={this.disabledTerms}/>
                         </div>
 
                         <div className="menu-flex-item">
