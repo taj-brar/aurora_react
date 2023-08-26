@@ -29,7 +29,7 @@ class Course extends React.Component {
 
     render() {
         const course = this.state.course;
-        const schedule = course.getSchedule() ? course.getSchedule()["0"] : null;
+        const schedule = course.getSchedules() ? course.getSchedules()["0"] : null;
         const courseButtonStyle = {
             backgroundColor: this.state.chosen ? "#9e9ea3" : "#d0d0d7"
         }

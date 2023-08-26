@@ -6,8 +6,13 @@ import RepeatedSession from './RepeatedSession.js';
 import YearSelector from './YearSelector.js';
 import TermSelector from "./TermSelector.js";
 import SubjectSelector from "./SubjectSelector.js";
+import DayContainer from './DayContainer.js';
+import {MWFSlots} from "./DayContainer.js";
+import {TRSlots} from "./DayContainer.js";
 
 class App extends React.Component {
+    disabledTerms = [];
+
     constructor(props) {
         super(props);
 
@@ -19,6 +24,8 @@ class App extends React.Component {
             chosenCourses: []
         }
 
+        this.updateDisabledTerms('2024');
+
         this.updateCourseList = this.updateCourseList.bind(this);
         this.unChooseCourse = this.unChooseCourse.bind(this);
         this.chooseCourse = this.chooseCourse.bind(this);
@@ -28,39 +35,45 @@ class App extends React.Component {
     }
 
     async updateCourseList() {
-        console.log("Update course list");
         await Utility.getCourses(this.state.year, this.state.term, this.state.subject)
             .then(data => RepeatedSession.CreateFromParsedDataSet(data))
             .then(courseList => {
-                this.setState({courses: courseList});
+                this.setState({
+                    courses: courseList,
+                    chosenCourses: []
+                });
             })
     }
 
     unChooseCourse(crn) {
-        console.log("\nunChose: " + crn);
         this.setState((oldState) => ({
             chosenCourses: oldState.chosenCourses.filter((c) => c.getCRN() !== crn)
         }), () => {
-            console.log(this.state.chosenCourses);
-            console.log("DONE --- unChose: " + crn);
         })
     }
 
     chooseCourse(crn) {
-        console.log("\nchose: " + crn);
         this.setState((oldState) => ({
             chosenCourses: oldState.chosenCourses.concat(oldState.courses.filter((c) => c.getCRN() === crn))
-        }), () => {
-            console.log(this.state.chosenCourses);
-            console.log("DONE --- chose: " + crn);
-        });
+        }), () => {});
 
+    }
+
+    updateDisabledTerms(year) {
+        this.disabledTerms = [];
+        if (year === '2020')
+            this.disabledTerms.push('Fall');
+        else if (year === '2024') {
+            this.disabledTerms.push('Summer');
+            this.disabledTerms.push('Fall');
+        }
     }
 
     setYear(newYear) {
         this.setState({
             year: newYear
         })
+        this.updateDisabledTerms(newYear)
     }
 
     setTerm(newTerm) {
@@ -78,17 +91,21 @@ class App extends React.Component {
     render() {
         const coursesList = this.state.courses.map((course) =>
                 <Course key={`${course.getCRN()} ${course.getTerm()}`} course={course} unChooseCourse={this.unChooseCourse} chooseCourse={this.chooseCourse}/>);
+        const mondayCourses = this.state.chosenCourses.filter(course => course.isOnMonday());
+        const tuesdayCourses = this.state.chosenCourses.filter(course => course.isOnTuesday());
+        const wednesdayCourses = this.state.chosenCourses.filter(course => course.isOnWednesday())
+        const thursdayCourses = this.state.chosenCourses.filter(course => course.isOnThursday());
+        const fridayCourses = this.state.chosenCourses.filter(course => course.isOnFriday());
 
         return (
-
             <div className="App main-flex-container">
 
                 <div className="week-flex-container">
-                    <div className="day-flex-container"></div>
-                    <div className="day-flex-container"></div>
-                    <div className="day-flex-container"></div>
-                    <div className="day-flex-container"></div>
-                    <div className="day-flex-container"></div>
+                    <DayContainer key={mondayCourses.length + 'M'} courses={mondayCourses} numSlots={MWFSlots}/>
+                    <DayContainer key={tuesdayCourses.length + 'T'} courses={tuesdayCourses} numSlots={TRSlots}/>
+                    <DayContainer key={wednesdayCourses.length + 'W'} courses={wednesdayCourses} numSlots={MWFSlots}/>
+                    <DayContainer key={thursdayCourses.length + 'R'} courses={thursdayCourses} numSlots={TRSlots}/>
+                    <DayContainer key={fridayCourses.length + 'F'} courses={fridayCourses} numSlots={MWFSlots}/>
                 </div>
 
                 <div className="sidebar-flex-container">
@@ -108,7 +125,7 @@ class App extends React.Component {
                         <div className="menu-flex-item">
                             <label htmlFor="term">Term</label>
                             <br/>
-                            <TermSelector setTerm={this.setTerm}/>
+                            <TermSelector key={this.disabledTerms.toString()} setTerm={this.setTerm} disabledTerms={this.disabledTerms}/>
                         </div>
 
                         <div className="menu-flex-item">

@@ -79,7 +79,7 @@ body {
 .course-list-flex-item {
   flex-grow: 0;
   margin: 5px;
-  padding: 8px;
+  padding: 0;
   border-radius: 8px;
   min-height: 110px;
   background-color: yellow;
@@ -107,4 +107,23 @@ p.course-details {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.DayContainer {
+  flex-basis: auto;
+  flex-grow: 1;
+  background-color: pink;
+  border: 2px solid black;
+  border-radius: 8px;
+  margin: 3px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CourseSlot {
+  flex-grow: 1;
+  margin: 5px;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 10px;
 }

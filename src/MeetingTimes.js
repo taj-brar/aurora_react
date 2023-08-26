@@ -20,9 +20,9 @@ class MeetingTimes {
     // CONSTRUCTOR
     constructor(data) {
         this.#type = data.type;
-        this.#startTime = this.hasTimeInfo() ? moment(data.timeSlot.split(' - ')['0'], 'hh:mm a') : null;
-        this.#endTime = this.hasTimeInfo() ? moment(data.timeSlot.split(' - ')['1'], 'hh:mm a') : null;
-        this.#timeSlot = this.hasTimeInfo() ? moment.range(this.#startTime, this.#endTime) : null;
+        this.#startTime = data.timeSlot != null ? moment(data.timeSlot.split(' - ')['0'], 'hh:mm a') : null;
+        this.#endTime = data.timeSlot != null ? moment(data.timeSlot.split(' - ')['1'], 'hh:mm a') : null;
+        this.#timeSlot = data.timeSlot != null ? moment.range(this.#startTime, this.#endTime) : null;
         this.#days = data.days;
         this.#location = data.location;
         this.#dateRange = data.dateRange;
@@ -31,7 +31,7 @@ class MeetingTimes {
     }
 
     hasTimeInfo() {
-        return this.#type !== 'On-Line Study' && this.#type !== 'Project';
+        return this.#startTime != null && this.#endTime != null;
     }
 
     getType() {
@@ -70,10 +70,30 @@ class MeetingTimes {
         return this.#instructors;
     }
 
+    isOnMonday() {
+        return this.getDays() !== null ? this.getDays().includes('M') : false;
+    }
+
+    isOnTuesday() {
+        return this.getDays() !== null ? this.getDays().includes('T') : false;
+    }
+
+    isOnWednesday() {
+        return this.getDays() !== null ? this.getDays().includes('W') : false;
+    }
+
+    isOnThursday() {
+        return this.getDays() !== null ? this.getDays().includes('R') : false;
+    }
+
+    isOnFriday() {
+        return this.getDays() !== null ? this.getDays().includes('F') : false;
+    }
+
     isConflict(otherMeetingTime) {
         let dayOverlap = false;
         for (let i = 0; i < otherMeetingTime.#days; i++)
-            dayOverlap &= this.#days.contains(otherMeetingTime.#days.charAt(i));
+            dayOverlap &= this.#days.includes(otherMeetingTime.#days.charAt(i));
 
         return dayOverlap && this.#timeSlot.overlaps(otherMeetingTime.#timeSlot);
     }

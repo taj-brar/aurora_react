@@ -40,6 +40,7 @@ class RepeatedSession {
             : null;
     }
 
+    // INSTANCE METHODS
     getCourseName() {
         return this.#courseName;
     }
@@ -88,15 +89,45 @@ class RepeatedSession {
         return this.#campus;
     }
 
-    getSchedule() {
+    getSchedules() {
         return this.#schedule;
     }
 
+    getPrimarySchedule() {
+        return this.#schedule ? this.#schedule['0'] : null;
+    }
+
+    isOnMonday() {
+        return this.#schedule !== null ? this.#schedule['0'].isOnMonday(): false;
+    }
+
+    isOnTuesday() {
+        return this.#schedule !== null ? this.#schedule['0'].isOnTuesday(): false;
+    }
+
+    isOnWednesday() {
+        return this.#schedule !== null ? this.#schedule['0'].isOnWednesday(): false;
+    }
+
+    isOnThursday() {
+        return this.#schedule !== null ? this.#schedule['0'].isOnThursday(): false;
+    }
+
+    isOnFriday() {
+        return this.#schedule !== null ? this.#schedule['0'].isOnFriday(): false;
+    }
+
+    // CLASS METHODS
     static CreateFromParsedDataSet(parsedDataSet) {
         const repeatedSessions = [];
         parsedDataSet.forEach(parsedData => repeatedSessions.push(new RepeatedSession(parsedData)));
         return repeatedSessions;
     }
+
+    static compareCourses(courseA, courseB) {
+        return courseA.getPrimarySchedule().getStartTime().localeCompare(courseB.getPrimarySchedule().getStartTime());
+    }
+
 }// end class RepeatedSession
 
 export default RepeatedSession;
