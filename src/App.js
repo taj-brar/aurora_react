@@ -63,6 +63,8 @@ class App extends React.Component {
         this.disabledTerms = [];
         if (year === '2020')
             this.disabledTerms.push('Fall');
+        else if (year === '2023')
+            this.disabledTerms.push('Winter');
         else if (year === '2024') {
             this.disabledTerms.push('Summer');
             this.disabledTerms.push('Fall');

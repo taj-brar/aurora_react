@@ -73,6 +73,7 @@ class HTMLTableParser {
 
     static checkScheduleExists(detailsArray) {
         const paragraphElements = detailsArray.filter(element => element.name === "p");
+        const textElements = detailsArray.filter(element => element.type === 'text');
 
         // Plain text indicating instructor approval required
         const instructorApprovalRequired = detailsArray["0"].type === "text" && detailsArray["0"].data.includes("Instructor approval required.");
@@ -83,7 +84,10 @@ class HTMLTableParser {
         // Bold text in paragraph indicating remote course
         const remoteCourse = paragraphElements.length !== 0 && paragraphElements["0"].name === "p" && paragraphElements["0"].children["0"].name === "b" && paragraphElements["0"].children["0"].children["0"].data.includes("Note: This course section will not be delivered on campus. This section will be offered by Remote Learning throughout the Winter Term.");
 
-        return !instructorApprovalRequired && !sectionCancelled && !remoteCourse;
+        // Plain text (not in <p></p>) indicating lab cancelled
+        const labCancelled = textElements.length > 2 && textElements['2'].data.includes('Lab cancelled');
+
+        return !instructorApprovalRequired && !sectionCancelled && !remoteCourse && !labCancelled;
     }
 
     static getCourseSchedule(tableElement) {
