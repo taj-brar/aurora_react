@@ -7,8 +7,6 @@ import YearSelector from './YearSelector.js';
 import TermSelector from "./TermSelector.js";
 import SubjectSelector from "./SubjectSelector.js";
 import DayContainer from './DayContainer.js';
-import {MWFSlots} from "./DayContainer.js";
-import {TRSlots} from "./DayContainer.js";
 
 class App extends React.Component {
     disabledTerms = [];
@@ -107,11 +105,11 @@ class App extends React.Component {
             <div className="App main-flex-container">
 
                 <div className="week-flex-container">
-                    <DayContainer key={mondayCourses.length + 'M'} courses={mondayCourses} numSlots={MWFSlots}/>
-                    <DayContainer key={tuesdayCourses.length + 'T'} courses={tuesdayCourses} numSlots={TRSlots}/>
-                    <DayContainer key={wednesdayCourses.length + 'W'} courses={wednesdayCourses} numSlots={MWFSlots}/>
-                    <DayContainer key={thursdayCourses.length + 'R'} courses={thursdayCourses} numSlots={TRSlots}/>
-                    <DayContainer key={fridayCourses.length + 'F'} courses={fridayCourses} numSlots={MWFSlots}/>
+                    <DayContainer key={mondayCourses.length + 'M'} courses={mondayCourses} dayMWF={true}/>
+                    <DayContainer key={tuesdayCourses.length + 'T'} courses={tuesdayCourses} dayMWF={false}/>
+                    <DayContainer key={wednesdayCourses.length + 'W'} courses={wednesdayCourses} dayMWF={true}/>
+                    <DayContainer key={thursdayCourses.length + 'R'} courses={thursdayCourses} dayMWF={false}/>
+                    <DayContainer key={fridayCourses.length + 'F'} courses={fridayCourses} dayMWF={true}/>
                 </div>
 
                 <div className="sidebar-flex-container">

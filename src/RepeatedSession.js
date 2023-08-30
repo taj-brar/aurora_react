@@ -125,7 +125,8 @@ class RepeatedSession {
     }
 
     static compareCourses(courseA, courseB) {
-        return courseA.getPrimarySchedule().getStartTime().localeCompare(courseB.getPrimarySchedule().getStartTime());
+        // return courseA.getPrimarySchedule().getStartTime().localeCompare(courseB.getPrimarySchedule().getStartTime());
+        return MeetingTimes.timeIsEarlier(courseA.getPrimarySchedule().getStartTime(), courseB.getPrimarySchedule().getStartTime()) ? -1 : 1;
     }
 
 }// end class RepeatedSession

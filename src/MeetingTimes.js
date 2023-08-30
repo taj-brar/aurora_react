@@ -97,6 +97,12 @@ class MeetingTimes {
 
         return dayOverlap && this.#timeSlot.overlaps(otherMeetingTime.#timeSlot);
     }
+
+    static timeIsEarlier(timeA, timeB) {
+        const time1 = moment(timeA, 'hh:mm a');
+        const time2 = moment(timeB, 'hh:mm a');
+        return time1.isBefore(time2);
+    }
 }
 
 export default MeetingTimes;
