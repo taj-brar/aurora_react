@@ -19,13 +19,11 @@ class DayContainer extends React.Component {
         let displayedCourses = this.state.courses.flatMap(course => {
             let slots = [];
             while (MeetingTimes.timeIsEarlier(this.state.slotStartTimes[i], course.getPrimarySchedule().getStartTime())) {
-            // while (course.getPrimarySchedule().getStartTime().localeCompare(this.state.slotStartTimes[i]) > 0) {
                 slots.push(<div className='CourseSlot'>{this.state.slotStartTimes[i]}</div>);
                 i++;
             }
             slots.push(<div className='CourseSlot SelectedCourseSlot'>{course.getCourseNumber()}</div>);
             i++;
-            console.log('SLOTS:' + slots);
             return slots;
         });
         while (displayedCourses.length < this.state.numSlots)

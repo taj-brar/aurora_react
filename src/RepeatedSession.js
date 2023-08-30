@@ -117,6 +117,10 @@ class RepeatedSession {
         return this.#schedule !== null ? this.#schedule['0'].isOnFriday(): false;
     }
 
+    isConflict(otherCourse) {
+        return this.getPrimarySchedule().isConflict(otherCourse.getPrimarySchedule());
+    }
+
     // CLASS METHODS
     static CreateFromParsedDataSet(parsedDataSet) {
         const repeatedSessions = [];
@@ -125,7 +129,6 @@ class RepeatedSession {
     }
 
     static compareCourses(courseA, courseB) {
-        // return courseA.getPrimarySchedule().getStartTime().localeCompare(courseB.getPrimarySchedule().getStartTime());
         return MeetingTimes.timeIsEarlier(courseA.getPrimarySchedule().getStartTime(), courseB.getPrimarySchedule().getStartTime()) ? -1 : 1;
     }
 

@@ -21,14 +21,15 @@ class Course extends React.Component {
     }
 
     handleClick() {
+        let conflict = false;
+        if (!this.state.chosen)
+            conflict = this.state.chooseCourse(this.state.course.getCRN());
+        else
+            this.state.unChooseCourse(this.state.course.getCRN());
+
         this.setState((oldState) => ({
-            chosen: !oldState.chosen
-        }), () => {
-            if (this.state.chosen)
-                this.state.chooseCourse(this.state.course.getCRN());
-            else
-                this.state.unChooseCourse(this.state.course.getCRN());
-        });
+            chosen: !oldState.chosen && !conflict
+        }));
     }
 
     render() {

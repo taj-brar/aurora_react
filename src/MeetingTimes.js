@@ -92,10 +92,10 @@ class MeetingTimes {
 
     isConflict(otherMeetingTime) {
         let dayOverlap = false;
-        for (let i = 0; i < otherMeetingTime.#days; i++)
-            dayOverlap &= this.#days.includes(otherMeetingTime.#days.charAt(i));
+        for (let i = 0; i < this.getDays().length; i++)
+            dayOverlap |= otherMeetingTime.getDays().includes(this.getDays().charAt(i));
 
-        return dayOverlap && this.#timeSlot.overlaps(otherMeetingTime.#timeSlot);
+        return dayOverlap && this.getTimeSlot().overlaps(otherMeetingTime.getTimeSlot());
     }
 
     static timeIsEarlier(timeA, timeB) {

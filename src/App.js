@@ -53,10 +53,23 @@ class App extends React.Component {
     }
 
     chooseCourse(crn) {
-        this.setState((oldState) => ({
-            chosenCourses: oldState.chosenCourses.concat(oldState.courses.filter((c) => c.getCRN() === crn))
-        }), () => {
+        let conflict = false;
+        this.state.chosenCourses.forEach(preChosenCourse => {
+            const newCourse = this.state.courses.find((course) => course.getCRN() === crn);
+
+            if (preChosenCourse.isConflict(newCourse)) {
+                console.log('CONFLICT ' + preChosenCourse.getCRN() + ' ' + crn);
+                conflict = true;
+            }
         });
+
+        if (!conflict)
+            this.setState((oldState) => ({
+                chosenCourses: oldState.chosenCourses.concat(oldState.courses.filter((c) => c.getCRN() === crn))
+            }), () => {
+            });
+
+        return conflict;
     }
 
     updateDisabledTerms(year) {
