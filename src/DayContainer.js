@@ -20,7 +20,7 @@ class DayContainer extends React.Component {
                 slots.push(<div className='CourseSlot'>{slotStartTimes[i]}</div>);
                 i++;
             }
-            slots.push(<div className='CourseSlot'>{course.getCourseNumber()}</div>);
+            slots.push(<div className='CourseSlot SelectedCourseSlot'>{course.getCourseNumber()}</div>);
             i++;
             console.log('SLOTS:' + slots);
             return slots;

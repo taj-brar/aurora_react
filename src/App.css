@@ -5,19 +5,21 @@
 
 * {
   box-sizing: border-box;
+  font-family: Oxygen, sans-serif;
 }
 
 body {
   height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 .main-flex-container {
   display: flex;
   flex-direction: row;
   margin: 0;
-  background-color: #696969;
   height: 100%;
+  background-color: #2e3046;
 }
 
 .week-flex-container {
@@ -25,13 +27,11 @@ body {
   flex-basis: auto;
   display: flex;
   flex-direction: row;
-  background-color: red;
 }
 
 .day-flex-container {
   flex-basis: auto;
   flex-grow: 1;
-  background-color: pink;
   border: 2px solid black;
   border-radius: 8px;
   margin: 3px;
@@ -43,16 +43,16 @@ body {
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  background-color: blue;
 }
 
 .menu-flex-container {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 100px;
-  background-color: green;
+  background-color: #3d6767;
   border-radius: 8px;
   margin: 5px;
+  padding: 7px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -66,6 +66,8 @@ body {
 
 div.menu-flex-item {
   text-align: left;
+  font-size: 0.85em;
+  color: #e1e1e1;
 }
 
 .menu-select-item {
@@ -76,8 +78,10 @@ div.menu-flex-item {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   overflow-y: scroll;
   text-align: left;
+  padding: 4px;
 }
 
 .course-list-flex-item {
@@ -86,40 +90,56 @@ div.menu-flex-item {
   padding: 0;
   border-radius: 8px;
   min-height: 110px;
-  background-color: yellow;
   overflow: hidden;
   display: flex;
   flex-direction: row;
 }
 
-.extra-course-info {
+.extra-course-info-popup {
   width: 10%;
   flex-grow: 0;
   float: left;
 }
 
-button.course-details {
+.course-info {
   width: 90%;
   flex-grow: 1;
   float: right;
+  overflow: hidden;
 }
 
-p.course-details {
+.course-details {
+  text-overflow: ellipsis;
+}
+
+.course-details-text {
   margin: 0;
-  font-size: 0.8em;
+  font-size: 0.85em;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.course-details-icon {
+  width: 14px;
+  height: 14px;
+  margin: 0 4px 0 0;
+  padding: 0;
+  float: left;
+}
+
+.course-info, .extra-course-info-button {
+  border: 0;
+  padding: 0 10px 0 3px;
+}
+
 .DayContainer {
   flex-basis: auto;
   flex-grow: 1;
-  background-color: pink;
-  border: 2px solid black;
+  background-color: #9e9ea3;
   border-radius: 8px;
-  margin: 3px;
+  margin: 10px 4px;
   display: flex;
   flex-direction: column;
 }
@@ -127,7 +147,12 @@ p.course-details {
 .CourseSlot {
   flex-grow: 1;
   margin: 5px;
-  background-color: orange;
+  background-color: #847b8e;
   border: 1px solid black;
   border-radius: 10px;
+  color: #e1e1e1;
+}
+
+.SelectedCourseSlot {
+  background-color: #ccbedb;
 }
