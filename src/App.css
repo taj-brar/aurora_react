@@ -156,3 +156,17 @@ div.menu-flex-item {
 .SelectedCourseSlot {
   background-color: #ccbedb;
 }
+
+.ConflictingCourse {
+  animation-name: CourseConflictAnimation;
+  animation-duration: 0.2s;
+  animation-iteration-count: 3;
+}
+
+@keyframes CourseConflictAnimation {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}

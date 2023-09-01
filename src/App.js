@@ -19,7 +19,8 @@ class App extends React.Component {
             term: 'None',
             subject: 'Computer Science',
             courses: [],
-            chosenCourses: []
+            chosenCourses: [],
+            conflictingCourseCRN: -1
         }
 
         this.updateDisabledTerms('2024');
@@ -39,7 +40,8 @@ class App extends React.Component {
                 .then(courseList => {
                     this.setState({
                         courses: courseList,
-                        chosenCourses: []
+                        chosenCourses: [],
+                        conflictingCourseCRN: -1
                     });
                 })
         }
@@ -58,7 +60,14 @@ class App extends React.Component {
             const newCourse = this.state.courses.find((course) => course.getCRN() === crn);
 
             if (preChosenCourse.isConflict(newCourse)) {
-                console.log('CONFLICT ' + preChosenCourse.getCRN() + ' ' + crn);
+                this.setState({
+                    conflictingCourseCRN: preChosenCourse.getCRN()
+                })
+                setTimeout(() => {
+                    this.setState({
+                        conflictingCourseCRN: -1
+                    })
+                }, 500)
                 conflict = true;
             }
         });
@@ -118,11 +127,11 @@ class App extends React.Component {
             <div className="App main-flex-container">
 
                 <div className="week-flex-container">
-                    <DayContainer key={mondayCourses.length + 'M'} courses={mondayCourses} dayMWF={true}/>
-                    <DayContainer key={tuesdayCourses.length + 'T'} courses={tuesdayCourses} dayMWF={false}/>
-                    <DayContainer key={wednesdayCourses.length + 'W'} courses={wednesdayCourses} dayMWF={true}/>
-                    <DayContainer key={thursdayCourses.length + 'R'} courses={thursdayCourses} dayMWF={false}/>
-                    <DayContainer key={fridayCourses.length + 'F'} courses={fridayCourses} dayMWF={true}/>
+                    <DayContainer key={mondayCourses.length + 'M' + this.state.conflictingCourseCRN} courses={mondayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={tuesdayCourses.length + 'T' + this.state.conflictingCourseCRN} courses={tuesdayCourses} dayMWF={false} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={wednesdayCourses.length + 'W' + this.state.conflictingCourseCRN} courses={wednesdayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={thursdayCourses.length + 'R' + this.state.conflictingCourseCRN} courses={thursdayCourses} dayMWF={false} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={fridayCourses.length + 'F' + this.state.conflictingCourseCRN} courses={fridayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
                 </div>
 
                 <div className="sidebar-flex-container">

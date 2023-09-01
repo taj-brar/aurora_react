@@ -10,7 +10,8 @@ class DayContainer extends React.Component {
         this.state = {
             courses: props.courses.sort(RepeatedSession.compareCourses),
             numSlots: props.dayMWF ? MWFSlots : TRSlots,
-            slotStartTimes: props.dayMWF ? slotStartTimesMWF : slotStartTimesTR
+            slotStartTimes: props.dayMWF ? slotStartTimesMWF : slotStartTimesTR,
+            conflictingCRN: props.conflictingCRN,
         }
     }
 
@@ -22,7 +23,7 @@ class DayContainer extends React.Component {
                 slots.push(<div className='CourseSlot'>{this.state.slotStartTimes[i]}</div>);
                 i++;
             }
-            slots.push(<div className='CourseSlot SelectedCourseSlot'>{course.getCourseNumber()}</div>);
+            slots.push(<div className={`CourseSlot SelectedCourseSlot ${course.getCRN() === this.state.conflictingCRN ? 'ConflictingCourse' : ''}`}>{course.getCourseNumber()}</div>);
             i++;
             return slots;
         });
