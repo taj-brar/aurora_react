@@ -14,6 +14,11 @@ body {
   overflow: hidden;
 }
 
+.largeText {
+  font-family: Rowdies, sans-serif;
+  font-size: 1.1em;
+}
+
 .main-flex-container {
   display: flex;
   flex-direction: row;
@@ -39,8 +44,8 @@ body {
 
 .sidebar-flex-container {
   flex-grow: 1;
-  flex-basis: 8%;
-  max-width: 400px;
+  flex-basis: 5%;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
 }
@@ -142,6 +147,7 @@ div.menu-flex-item {
   margin: 10px 4px;
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
 }
 
 .CourseSlot {
@@ -151,13 +157,39 @@ div.menu-flex-item {
   border: 1px solid black;
   border-radius: 10px;
   color: #e1e1e1;
+  font-size: 71%;
 }
 
-.SelectedCourseSlot {
+.selected-course-slot {
+  flex-grow: 0;
   background-color: #ccbedb;
+  color: black;
+  padding: 3px 3px 3px 10px;
+  text-align: left;
+  overflow: hidden;
 }
 
-.ConflictingCourse {
+.course-slot-info {
+  flex-grow: 0;
+  text-overflow: ellipsis;
+  padding: 0;
+  margin: 0;
+}
+
+.course-slot-info-icon {
+  width: 13px;
+  height: 13px;
+  margin: 0 4px 0 0;
+  float: left;
+}
+
+.course-slot-info-text {
+  margin: 4px 0;
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.conflicting-course {
   animation-name: CourseConflictAnimation;
   animation-duration: 0.2s;
   animation-iteration-count: 3;

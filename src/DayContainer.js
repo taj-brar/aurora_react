@@ -2,6 +2,9 @@ import React from "react";
 import RepeatedSession from "./RepeatedSession.js";
 import MeetingTimes from "./MeetingTimes.js";
 import './App.css'
+import personIcon from './icons/person-icon.svg';
+import locationIcon from './icons/location-pin-icon.svg';
+import clockIcon from './icons/clock-icon.svg';
 
 class DayContainer extends React.Component {
     constructor(props) {
@@ -23,7 +26,27 @@ class DayContainer extends React.Component {
                 slots.push(<div className='CourseSlot'>{this.state.slotStartTimes[i]}</div>);
                 i++;
             }
-            slots.push(<div className={`CourseSlot SelectedCourseSlot ${course.getCRN() === this.state.conflictingCRN ? 'ConflictingCourse' : ''}`}>{course.getCourseNumber()}</div>);
+            slots.push(<div
+                    className={`CourseSlot selected-course-slot ${course.getCRN() === this.state.conflictingCRN ? 'conflicting-course' : ''}`}>
+                    <p className='course-slot-info-text'><span className='largeText'>{course.getCourseNumber()} {course.getSection()}</span></p>
+
+                    <div className='course-slot-info'>
+                        <img className='course-slot-info-icon' src={clockIcon} alt='clock icon'/>
+                        <p className='course-slot-info-text'>{course.getPrimarySchedule().getStartTime()} - {course.getPrimarySchedule().getEndTime()}</p>
+                    </div>
+
+                    <div className='course-slot-info'>
+                        <img className='course-slot-info-icon' src={locationIcon} alt='location icon'/>
+                        <p className='course-slot-info-text'>{course.getPrimarySchedule().getLocation()}</p>
+                    </div>
+
+                    <div className='course-slot-info'>
+                        <img className='course-slot-info-icon' src={personIcon} alt='person icon'/>
+                        <p className='course-slot-info-text'>{course.getPrimarySchedule().getInstructors()}</p>
+                    </div>
+
+                </div>
+            );
             i++;
             return slots;
         });

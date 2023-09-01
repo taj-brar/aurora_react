@@ -127,11 +127,16 @@ class App extends React.Component {
             <div className="App main-flex-container">
 
                 <div className="week-flex-container">
-                    <DayContainer key={mondayCourses.length + 'M' + this.state.conflictingCourseCRN} courses={mondayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
-                    <DayContainer key={tuesdayCourses.length + 'T' + this.state.conflictingCourseCRN} courses={tuesdayCourses} dayMWF={false} conflictingCRN={this.state.conflictingCourseCRN}/>
-                    <DayContainer key={wednesdayCourses.length + 'W' + this.state.conflictingCourseCRN} courses={wednesdayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
-                    <DayContainer key={thursdayCourses.length + 'R' + this.state.conflictingCourseCRN} courses={thursdayCourses} dayMWF={false} conflictingCRN={this.state.conflictingCourseCRN}/>
-                    <DayContainer key={fridayCourses.length + 'F' + this.state.conflictingCourseCRN} courses={fridayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={mondayCourses.length + 'M' + this.state.conflictingCourseCRN}
+                                  courses={mondayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={tuesdayCourses.length + 'T' + this.state.conflictingCourseCRN}
+                                  courses={tuesdayCourses} dayMWF={false} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={wednesdayCourses.length + 'W' + this.state.conflictingCourseCRN}
+                                  courses={wednesdayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={thursdayCourses.length + 'R' + this.state.conflictingCourseCRN}
+                                  courses={thursdayCourses} dayMWF={false} conflictingCRN={this.state.conflictingCourseCRN}/>
+                    <DayContainer key={fridayCourses.length + 'F' + this.state.conflictingCourseCRN}
+                                  courses={fridayCourses} dayMWF={true} conflictingCRN={this.state.conflictingCourseCRN}/>
                 </div>
 
                 <div className="sidebar-flex-container">

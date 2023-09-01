@@ -118,7 +118,7 @@ class RepeatedSession {
     }
 
     isConflict(otherCourse) {
-        return this.getPrimarySchedule().isConflict(otherCourse.getPrimarySchedule());
+        return this.getPrimarySchedule()?.isConflict(otherCourse.getPrimarySchedule());
     }
 
     // CLASS METHODS

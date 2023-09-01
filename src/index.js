@@ -9,6 +9,7 @@ root.render(
         <Helmet>
             <title>Aurora Enhanced</title>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen" />
+            <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet" />
         </Helmet>
 
         <body>
