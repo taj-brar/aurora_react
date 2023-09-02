@@ -15,27 +15,25 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            year: 'None',
-            term: 'None',
-            subject: 'Computer Science',
+            year: '',
+            term: '',
+            subjects: [],
             courses: [],
             chosenCourses: [],
             conflictingCourseCRN: -1
         }
-
-        this.updateDisabledTerms('2024');
 
         this.updateCourseList = this.updateCourseList.bind(this);
         this.unChooseCourse = this.unChooseCourse.bind(this);
         this.chooseCourse = this.chooseCourse.bind(this);
         this.setYear = this.setYear.bind(this);
         this.setTerm = this.setTerm.bind(this);
-        this.setSubject = this.setSubject.bind(this);
+        this.setSubjects = this.setSubjects.bind(this);
     }
 
     async updateCourseList() {
-        if (this.state.year !== 'None' && this.state.term !== 'None' && this.state.subject !== 'None') {
-            await Utility.getCourses(this.state.year, this.state.term, this.state.subject)
+        if (this.state.year !== 'None' && this.state.term !== 'None' && this.state.subjects !== 'None') {
+            await Utility.getCourses(this.state.year, this.state.term, this.state.subjects)
                 .then(data => RepeatedSession.CreateFromParsedDataSet(data))
                 .then(courseList => {
                     this.setState({
@@ -107,9 +105,9 @@ class App extends React.Component {
         })
     }
 
-    setSubject(newSubject) {
+    setSubjects(newSubjects) {
         this.setState({
-            subject: newSubject
+            subjects: newSubjects
         })
     }
 
@@ -144,22 +142,16 @@ class App extends React.Component {
                     <div className="menu-flex-container">
 
                         <div className="menu-flex-item">
-                            <label htmlFor="year">Year</label>
-                            <br/>
                             <YearSelector setYear={this.setYear}/>
                         </div>
 
                         <div className="menu-flex-item">
-                            <label htmlFor="term">Term</label>
-                            <br/>
                             <TermSelector key={this.disabledTerms.toString()} setTerm={this.setTerm}
                                           disabledTerms={this.disabledTerms}/>
                         </div>
 
                         <div className="menu-flex-item">
-                            <label htmlFor="subject">Subject</label>
-                            <br/>
-                            <SubjectSelector setSubject={this.setSubject}/>
+                            <SubjectSelector setSubjects={this.setSubjects}/>
                         </div>
 
                         <button className="menu-flex-item" onClick={this.updateCourseList}>Get courses</button>

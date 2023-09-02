@@ -1,5 +1,7 @@
 import React from "react";
+import Select from 'react-select';
 import './App.css';
+import Utility from "./Utility.js";
 
 class TermSelector extends React.Component {
     constructor(props) {
@@ -14,23 +16,27 @@ class TermSelector extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(e) {
-        const newTerm = e.target.value;
-        this.state.setTerm(newTerm);
+    handleChange(newTerm) {
+        this.state.setTerm(newTerm?.value);
         this.setState({
             selectedTerm: newTerm
         })
     }
 
     render() {
-        return (
-            <select id="term" className="menu-select-item" value={this.state.selectedTerm} onChange={this.handleChange}>
-                <option value="None">Select a term</option>
-                <option value="Fall" disabled={this.state.disabledTerms.includes('Fall')}>Fall</option>
-                <option value="Winter" disabled={this.state.disabledTerms.includes('Winter')}>Winter</option>
-                <option value="Summer" disabled={this.state.disabledTerms.includes('Summer')}>Summer</option>
-            </select>
-        );
+        const termOption = [
+            {value: 'Fall', label: 'Fall', isDisabled: this.state.disabledTerms.includes('Fall')},
+            {value: 'Winter', label: 'Winter', isDisabled: this.state.disabledTerms.includes('Winter')},
+            {value: 'Summer', label: 'Summer', isDisabled: this.state.disabledTerms.includes('Summer')}
+        ];
+
+        return <Select id="term"
+                       className="menu-select-item"
+                       value={this.state.selectedTerm}
+                       placeholder='select term'
+                       onChange={this.handleChange}
+                       styles={Utility.getCustomSelectStyles()}
+                       options={termOption}/>;
     }
 }
 

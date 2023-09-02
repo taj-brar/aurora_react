@@ -1,5 +1,7 @@
 import React from "react";
+import Select from 'react-select';
 import './App.css';
+import Utility from "./Utility.js";
 
 class YearSelector extends React.Component {
     constructor(props) {
@@ -13,25 +15,29 @@ class YearSelector extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(e) {
-        const newYear = e.target.value;
-        this.state.setYear(newYear);
+    handleChange(newYear) {
+        this.state.setYear(newYear?.value);
         this.setState({
             selectedYear: newYear
         })
     }
 
     render() {
-        return (
-            <select id="year" className="menu-select-item" value={this.state.selectedYear} onChange={this.handleChange}>
-                <option value="None">Select a year</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-            </select>
-        );
+        const yearOptions = [
+            { value: '2024', label: '2024' },
+            { value: '2023', label: '2023' },
+            { value: '2022', label: '2022' },
+            { value: '2021', label: '2021' },
+            { value: '2020', label: '2020' }
+        ];
+
+        return <Select id="year"
+                       className="menu-select-item"
+                       value={this.state.selectedTerm}
+                       placeholder='select year'
+                       onChange={this.handleChange}
+                       styles={Utility.getCustomSelectStyles()}
+                       options={yearOptions}/>;
     }
 }
 

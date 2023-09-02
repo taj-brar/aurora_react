@@ -3,12 +3,15 @@ import cheerio from 'cheerio';
 
 class HTMLTableParser {
     // CLASS METHODS
-    static fetchData(year, term, subject) {
+    static fetchData(year, term, subjects) {
+        let subjectCodes = '';
+        subjects.split(',').forEach(code => subjectCodes += '&sel_subj=' + code);
+
         return fetch('https://aurora.umanitoba.ca/ssb/bwckschd.p_get_crse_unsec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': '353',
+                'Content-Length': '' + (339 + subjectCodes.length),
                 'Origin': 'https://aurora.umanitoba.ca',
                 'Connection': 'keep-alive',
                 'Upgrade-Insecure-Requests': '1',
@@ -16,10 +19,11 @@ class HTMLTableParser {
                 'Sec-Fetch-Mode': 'navigate',
                 'Sec-Fetch-Site': 'same-origin'
             },
-            body: `term_in=${year}${term}&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_subj=${subject}&sel_crse=&sel_title=&sel_from_cred=&sel_to_cred=&sel_camp=%25&sel_levl=%25&sel_ptrm=%25&sel_instr=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a`
+            body: `term_in=${year}${term}&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy${subjectCodes}&sel_crse=&sel_title=&sel_from_cred=&sel_to_cred=&sel_camp=%25&sel_levl=%25&sel_ptrm=%25&sel_instr=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a`
         }).then(response => response.text())
             .then(html => html.substring(html.indexOf("<table  CLASS=\"datadisplaytable\""), html.lastIndexOf("<br />")))
-            .then(htmlChopped => HTMLTableParser.parse(htmlChopped));
+            .then(htmlChopped => HTMLTableParser.parse(htmlChopped))
+            .catch(err => console.error(err));
     }
 
     static parse(htmlToParse) {
